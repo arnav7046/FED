@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>.heading-calc{
+        text-align: center;
+        padding-bottom: 50px;
+    }
+    .main-container{
+        
+        margin-left: 550px;
+        width: 355px;
+        height: 543px;
+        border: 20px solid rgb(127, 145, 29);
+        border-radius: 20px;
+    }
+    input{
+        outline-style: none;
+         border-radius: 7px;
+        background-color: rgb(213, 205, 205);
+        text-align: end;
+        padding-right: 20px;
+        width: 98%;
+        height: 87px;
+        font-size: 50px;
+    }
+    
+    .btn{
+        border-radius: 5px;
+        text-align: center;
+        color: rgb(14, 14, 14);
+        background-color: #a78e8e;
+        height: 90px;
+        width: 90px;
+        font-size: larger;
+        padding: 30px;
+    }
+    .btn:hover{
+        background-color: rgb(255, 0, 0);
+            color:  #6e5959;
+            font-size: 25px;
+            font-weight: bolder;
+            text-align: center;
+    }
+    .rows{
+        display: flex;
+        justify-content:space-between;
+    }
+    #zero{
+        width: 181px;
+    }
+    #clear{
+        width: 183px;
+    }
+    body{
+        background-color: #cbc0c0;
+    }
+    input:hover{
+        cursor: pointer;
+    }
+    .btn:hover{
+        cursor: pointer;
+    }
+    .new-btn{
+        color: rgb(23, 23, 22);
+    }
+    .new-btn:hover{
+        background-color: rgb(113, 186, 239);
+        color: rgb(173, 38, 38)
+        ;
+        font-size: 25px;
+        font-weight: bolder;
+        text-align: center;
+    }</style>
+    <title>Calculator</title>
+</head>
+<body>
+
+    <script>// Create elements and set attributes
+        const heading = document.createElement('h1');
+        heading.classList.add('heading-calc');
+        heading.textContent = 'MY CALCULATOR';
+        
+        const mainContainer = document.createElement('div');
+        mainContainer.classList.add('main-container');
+        
+        const displayRow = document.createElement('div');
+        displayRow.classList.add('rows');
+        
+        const displayInput = document.createElement('input');
+        displayInput.type = 'text';
+        displayInput.id = 'display';
+        
+        const buttonRows = [];
+        
+        const buttonData = [
+            ['AC','%', '/','('],
+            ['7', '8', '9', '*'],
+            ['4', '5', '6', '-'],
+            ['1', '2', '3', '+'],
+            ['0', '.', '=',')']
+        ];
+        
+        // Create button rows
+        for (const rowData of buttonData) {
+            const buttonRow = document.createElement('div');
+            buttonRow.classList.add('rows');
+        
+            for (const buttonText of rowData) {
+                const button = document.createElement('button');
+                button.classList.add('btn');
+                button.textContent = buttonText;
+                buttonRow.appendChild(button);
+            }
+        
+            buttonRows.push(buttonRow);
+        }
+        
+        // Append elements to the DOM
+        document.body.appendChild(heading);
+        document.body.appendChild(mainContainer);
+        mainContainer.appendChild(displayRow);
+        displayRow.appendChild(displayInput);
+        
+        for (const buttonRow of buttonRows) {
+            mainContainer.appendChild(buttonRow);
+        }
+        
+        // Calculator functionality
+        let text = document.querySelector("input");
+        let buttons = document.querySelectorAll(".btn");
+        let string = "";
+        let op = ["/","*","-","+","%",".","1","2","3","4","5","6","7","8","9","0"]
+        
+        Array.from(buttons).forEach((button) => {
+            button.addEventListener("click", (e) => {
+                if (e.target.innerHTML == "=") {
+                    string = eval(string);
+                    text.value = string;
+                } else if (e.target.innerHTML == "AC") {
+                    string = "";
+                    text.value = string;
+                } else {
+                    string = string + e.target.innerHTML;
+                    text.value = string;
+                }
+            })
+        })
+        
+        document.addEventListener("keydown", (e) => {
+            const key = e.key
+            if (op.includes(key)) {
+                string += key
+            } else if (key === "=" || key === "Enter") {
+                string = eval(string);
+            } else if (key === "Escape") {
+                string = ""
+            }
+            text.value = string
+        })
+        </script>
+</body>
+</html>
